@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import ChildComponent from '../component/child.component'
 
 class RenderService {
 	/**
@@ -31,7 +31,7 @@ class RenderService {
 		const allElements = parentElement.getElementsByTagName('*')
 
 		for (const element of allElements) {
-			const elementTagName = element.tagName.toLocaleLowerCase()
+			const elementTagName = element.tagName.toLowerCase()
 			if (componentTagPattern.test(elementTagName)) {
 				const componentName = elementTagName
 					.replace(componentTagPattern, '')
@@ -40,7 +40,8 @@ class RenderService {
 				const foundComponent = components.find(Component => {
 					const instance =
 						Component instanceof ChildComponent ? Component : new Component()
-					return instance.constructor.name.toLocaleLowerCase() === componentName
+
+					return instance.constructor.name.toLowerCase() === componentName
 				})
 
 				if (foundComponent) {
@@ -57,14 +58,15 @@ class RenderService {
 			}
 		}
 	}
+
 	/**
-	 * @param {string} element
 	 * @param {Object} moduleStyles
+	 * @param {string} element
 	 * @returns {void}
 	 */
-
 	#applyModuleStyles(moduleStyles, element) {
 		if (!element) return
+
 		const applyStyles = element => {
 			for (const [key, value] of Object.entries(moduleStyles)) {
 				if (element.classList.contains(key)) {
@@ -73,12 +75,23 @@ class RenderService {
 				}
 			}
 		}
+
 		if (element.getAttribute('class')) {
 			applyStyles(element)
 		}
+
 		const elements = element.querySelectorAll('*')
 		elements.forEach(applyStyles)
 	}
 }
 
 export default new RenderService()
+
+{
+	/* <div class='home'>
+	<h1 class='text'></h1>
+	<component-heading></component-heading>
+	<component-card-info></component-card-info>
+</div>
+ */
+}
