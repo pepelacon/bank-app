@@ -1,4 +1,4 @@
-import { BaseScreen } from '@/core/router/component/base-screen.component'
+import { BaseScreen } from '@/core/component/base-screen.component'
 
 export class NotFound extends BaseScreen {
 	constructor() {
