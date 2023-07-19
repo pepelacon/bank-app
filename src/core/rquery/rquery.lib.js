@@ -1,3 +1,5 @@
+import { formatCardNumberWithDashes } from '@/utils/format/format-card-number'
+
 /**
  * Represents the RQuery class for working with DOM elements.
  */
@@ -20,6 +22,8 @@ class RQuery {
 		}
 	}
 
+	/* FIND */
+
 	/**
 	 * Find the first element that matches the specified selector within the selected element.
 	 * @param {string} selector - A CSS selector string to search for within the selected element.
@@ -34,6 +38,8 @@ class RQuery {
 			throw new Error(`Element ${selector} not found!`)
 		}
 	}
+
+	/* INSERT */
 
 	/**
 	 * Append a new element as a child of the selected element.
@@ -66,16 +72,6 @@ class RQuery {
 	}
 
 	/**
-	 * Attach a click event listener to the selected element.
-	 * @param {function(Event): void} callback - The event listener function to execute when the selected element is clicked. The function will receive the event object as its argument.
-	 * @returns {RQuery} The current RQuery instance for chaining.
-	 */
-	click(callback) {
-		this.element.addEventListener('click', callback)
-		return this
-	}
-
-	/**
 	 * Get or set the inner HTML of the selected element.
 	 * @param {string} [htmlContent] - Optional HTML content to set. If not provided, the current inner HTML will be returned.
 	 * @returns {RQuery|string} The current RQuery instance for chaining when setting HTML content, or the current inner HTML when getting.
@@ -88,6 +84,34 @@ class RQuery {
 			return this
 		}
 	}
+
+	/**
+	 * Get or set the text content of the selected element.
+	 * @param {string} [textContent] - Optional text content to set. If not provided, the current text content will be returned.
+	 * @returns {RQuery|string} The current RQuery instance for chaining when setting text content, or the current text content when getting.
+	 */
+	text(textContent) {
+		if (typeof textContent === 'undefined') {
+			return this.element.textContent
+		} else {
+			this.element.textContent = textContent
+			return this
+		}
+	}
+
+	/* EVENTS */
+
+	/**
+	 * Attach a click event listener to the selected element.
+	 * @param {function(Event): void} callback - The event listener function to execute when the selected element is clicked. The function will receive the event object as its argument.
+	 * @returns {RQuery} The current RQuery instance for chaining.
+	 */
+	click(callback) {
+		this.element.addEventListener('click', callback)
+		return this
+	}
+
+	/* FORM */
 
 	/**
 	 * Set attributes and event listeners for an input element.
@@ -154,6 +178,8 @@ class RQuery {
 		return this
 	}
 
+	/* STYLES */
+
 	/**
 	 * Set the CSS style of the selected element.
 	 * @param {string} property - The CSS property to set.
@@ -201,6 +227,25 @@ class RQuery {
 		}
 
 		return this
+	}
+
+	/**
+	 * Set or get the value of an attribute on the selected element.
+	 * @param {string} attributeName - The name of the attribute to set or get.
+	 * @param {string} [value] - The value to set for the attribute. If not provided, the current value of the attribute will be returned.
+	 * @returns {RQuery|string} The current RQuery instance for chaining (if setting) or the attribute value (if getting).
+	 */
+	attr(attributeName, value) {
+		if (typeof attributeName !== 'string') {
+			throw new Error('Attribute name must be a string')
+		}
+
+		if (typeof value === 'undefined') {
+			return this.element.getAttribute(attributeName)
+		} else {
+			this.element.setAttribute(attributeName, value)
+			return this
+		}
 	}
 }
 
