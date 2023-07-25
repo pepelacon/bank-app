@@ -18,8 +18,22 @@ export class Auth extends BaseScreen {
 		this.authService = new AuthService()
 	}
 
+	#validateFields(formValues) {
+		const emailLabel = $R(this.element).find('label:first-child')
+		const passwordLabel = $R(this.element).find('label:last-child')
+
+		if (!formValues.email) {
+			validationService.showError(emailLabel)
+		}
+		if (!formValues.password) {
+			validationService.showError(passwordLabel)
+		}
+		return formValues.email && formValues.password
+	}
+
 	#handleSubmit = event => {
-		console.log(event.target)
+		const formValues = formService.getFormValues(event.target)
+		if (!this.#validateFields(formValues)) return
 	}
 
 	#changeFormType = event => {
