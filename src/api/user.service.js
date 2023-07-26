@@ -1,4 +1,4 @@
-import { redQuery } from '@/core/red-query/red-query.lib'
+import { redQuery } from '@/core/d-query/red-query.lib'
 
 export class UserService {
 	#BASE_URL = '/users'
